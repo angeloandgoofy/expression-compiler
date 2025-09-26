@@ -255,9 +255,6 @@ static void error()
     printf("Error (more is desired, but not implemented).\n");
 }
 
-/*****************************************************/
-/* lookup - a function to lookup operators and parentheses
-   and return the token */
 int lookup(char ch) {
     switch (ch) {
         case '(':
@@ -302,8 +299,7 @@ int lookup(char ch) {
     }
     return nextToken;
 }
-/*****************************************************/
-/* addChar - a function to add nextChar to lexeme */
+
 void addChar() {
     if (lexLen <= 98) {
         lexeme[lexLen++] = nextChar;
@@ -313,9 +309,7 @@ void addChar() {
     }
 }
 
-/*****************************************************/
-/* getChar - a function to get the next character of input and determine its 
- * character class */
+
 void getChar() {
     if (testInput[inputIndex] != '\0') {
         nextChar = testInput[inputIndex++];
@@ -331,21 +325,17 @@ void getChar() {
     }
 }
 
-/*****************************************************/
-/* getNonBlank - a function to call getChar until it returns a non-whitespace 
- * character */
+
 void getNonBlank() {
     while (isspace(nextChar)) getChar();
 }
 
-/*****************************************************/
-/* lex - a simple lexical analyzer for arithmetic expressions */
+
 int lex() {
     lexLen = 0;
     getNonBlank();
 
     switch (charClass) {
-        /* Parse identifiers */
         case LETTER:
             addChar();
             getChar();
@@ -358,7 +348,6 @@ int lex() {
             nextToken = IDENT;
             break;
 
-        /* Parse integer literals */
         case DIGIT:
             if(nextChar == '.'){
                 addChar();
@@ -381,7 +370,6 @@ int lex() {
             //genInst(PUSH, atof(lexeme));
             break;
 
-        /* Parentheses and operators */
         case UNKNOWN:
             switch (nextChar)
             {
@@ -427,7 +415,6 @@ int lex() {
             }
             break;
 
-        /* EOF */
         case EOF:
             nextToken = EOF;
             lexeme[0] = 'E';
@@ -435,11 +422,11 @@ int lex() {
             lexeme[2] = 'F';
             lexeme[3] = 0;
             break;
-    } /* End of switch */
+    } 
 
     printf("Next token is: %d, Next lexeme is %s\n", nextToken, lexeme);
     return nextToken;
-} /* End of function lex */
+}       
     
 
 void postorder(NODE* node) {
